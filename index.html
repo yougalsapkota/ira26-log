@@ -1184,6 +1184,9 @@ dialog.lv-log > .card { border: 0; box-shadow: none; margin: 0; padding: 14px 18
 /* Live header at mid widths: buttons wrap under the title instead of crowding it */
 @media (max-width: 1320px) { .lvh-top { flex-wrap: wrap; } .lvh-top .row { flex-wrap: wrap; } .lv-hero .lv-days { grid-template-columns: 1fr; gap: 8px; } }
 .lva-foot .lva-bc em, .lva-foot .lva-bc .u { white-space: nowrap; } .lva-foot { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+.rs-zone { margin-top: 16px; padding: 12px 14px; border: 1px solid #EBC3C7; border-left: 4px solid #A01E28; border-radius: 10px; background: #FCF6F7; }
+.rs-h { font-weight: 700; color: #A01E28; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+.btn.danger { background: #A01E28; color: #fff; } .btn.danger:disabled { background: #D9A9AE; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -3538,6 +3541,14 @@ window.EXT = (function () {
           <label class="btn ghost" style="cursor:pointer">Restore from backup…<input type="file" id="bkFile" accept=".json,application/json" style="display:none"></label>
         </div>
         <div class="muted" id="bkMsg" style="font-size:12px;margin-top:6px"></div>
+        <div class="rs-zone">
+          <div class="rs-h">Reset site</div>
+          <div class="muted" style="font-size:13px">Permanently deletes every daily update, filter, weight, photo, AE33 / CPCB / conditions / maintenance log, instrument data, consumables and roster, so the site starts empty. Download a backup first; this can't be undone.</div>
+          <label class="row" style="gap:6px;font-size:13px;margin-top:8px"><input type="checkbox" id="rsCfg"> Also reset campaign dates, site name and quality-control settings</label>
+          <div class="row" style="gap:8px;margin-top:8px;flex-wrap:wrap"><label class="fld" style="width:200px">Type RESET to confirm<input type="text" id="rsTxt" autocomplete="off" placeholder="RESET"></label>
+            <button class="btn danger" type="button" id="rsGo" disabled style="align-self:end">Clear all data</button></div>
+          <div class="muted" id="rsMsg" style="font-size:12px;margin-top:6px"></div>
+        </div>
       </div>
       <div class="grid-2" style="align-items:start">
         <div class="card">
@@ -3566,6 +3577,8 @@ window.EXT = (function () {
       try { await db.doc("config/qc").set(body); qc = body; $("qcMsg").textContent = "Saved."; setTimeout(() => { $("qcMsg").textContent = ""; }, 2000); renderQc(); validate(); renderAlerts(); } catch { $("qcMsg").textContent = "Couldn't save."; }
     };
     $("bkGo").onclick = backupAll;
+    $("rsTxt").addEventListener("input", () => { $("rsGo").disabled = $("rsTxt").value.trim() !== "RESET"; });
+    $("rsGo").onclick = resetAll;
     $("bkFile").onchange = restoreAll;
     $("stForm").onsubmit = async (e) => {
       e.preventDefault(); if (!canWrite) return;
@@ -3666,6 +3679,23 @@ window.EXT = (function () {
       $("bkMsg").textContent = `${res}: ${n} daily update${n === 1 ? "" : "s"}, ${f} filter${f === 1 ? "" : "s"}${$("bkPh").checked ? ", " + Object.keys(out.photos).length + " photos" : ""}.`;
     } catch { $("bkMsg").textContent = "Couldn't make the backup."; }
     btn.disabled = false;
+  }
+  async function resetAll() {
+    if (!canWrite || $("rsTxt").value.trim() !== "RESET") return;
+    if (!(await ask("Delete ALL campaign data from the site? This can't be undone.", "Delete everything"))) return;
+    const btn = $("rsGo"); btn.disabled = true; $("rsTxt").disabled = true;
+    const paths = [];
+    Object.entries(days).forEach(([d, x]) => { paths.push("days/" + d); Object.values((x && x.photos) || {}).flat().forEach((p) => { if (p && p.pid) paths.push("photos/" + p.pid); }); });
+    Object.keys(filtersMeta).forEach((k) => paths.push("filters/" + k));
+    stock.forEach((s) => paths.push("stock/" + s.id)); aeLog.forEach((x) => paths.push("aeLog/" + x.id)); cpLog.forEach((x) => paths.push("cpcb/" + x.id));
+    Object.keys(condLog).forEach((k) => paths.push("cond/" + k)); maintLog.forEach((x) => paths.push("maint/" + x.id));
+    Object.keys(roster).forEach((k) => paths.push("roster/" + k)); Object.keys(seriesIdx).forEach((k) => paths.push("series/" + k));
+    if ($("rsCfg").checked) paths.push("meta/campaign", "config/qc");
+    let ok = 0, bad = 0;
+    for (const p of paths) { try { await db.doc(p).delete(); ok++; } catch { bad++; } if ((ok + bad) % 10 === 0) $("rsMsg").textContent = `Deleting… ${ok + bad} of ${paths.length}`; }
+    $("rsMsg").textContent = bad ? `Deleted ${ok} items; ${bad} couldn't be deleted (check you are logged in as operator).` : `Done: deleted ${ok} items. Reloading…`;
+    try { localStorage.removeItem("ira26-lastBackup"); } catch {}
+    if (!bad) setTimeout(() => location.reload(), 1200); else { btn.disabled = false; $("rsTxt").disabled = false; }
   }
   async function restoreAll(e) {
     const file = e.target.files && e.target.files[0]; e.target.value = ""; if (!file || !canWrite) return;
