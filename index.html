@@ -3558,7 +3558,7 @@ window.EXT = (function () {
         </div>
       </div>
     </section>`));
-    const sb = $("settingsBox"); if (sb) { sb.classList.add("op-only"); $("v-logs").appendChild(sb); }
+    const sb = $("settingsBox"); if (sb) { sb.classList.add("op-only"); $("v-logs").appendChild(sb); sb.querySelectorAll("input, button").forEach((x) => { x.disabled = !canWrite; }); }
     $("qcForm").onsubmit = async (e) => {
       e.preventDefault(); if (!canWrite) return;
       const v = (id, d) => num($(id).value) ?? d;
@@ -4794,7 +4794,7 @@ window.EXT = (function () {
     sub("series")((s) => { const m = {}; s.docs.forEach((d) => { const v = d.data(); if (v && v.date) m[d.id] = v; }); seriesIdx = m; fillDays(); renderData(); });
   }
   function render() { renderLive(); renderAe(); renderCp(); renderCond(); renderMaint(); renderAlerts(); renderLab(); renderTracker(); renderLogs(); renderPm(); decorateCalendar(); renderUptime(); renderOvTags(); renderDayNight(); renderMoudi(); renderEvents(); }
-  function onWrite() { if ($("tourLink")) $("tourLink").classList.toggle("hidden", !!canWrite); renderLogs(); renderData(); renderTracker(); document.querySelectorAll(".op-only").forEach((x) => x.classList.toggle("hidden", !canWrite)); if ($("shareAfter")) $("shareAfter").classList.toggle("hidden", !(draftDate && days[draftDate])); }
+  function onWrite() { document.querySelectorAll("#settingsBox input, #settingsBox button").forEach((x) => { x.disabled = !canWrite; }); if ($("tourLink")) $("tourLink").classList.toggle("hidden", !!canWrite); renderLogs(); renderData(); renderTracker(); document.querySelectorAll(".op-only").forEach((x) => x.classList.toggle("hidden", !canWrite)); if ($("shareAfter")) $("shareAfter").classList.toggle("hidden", !(draftDate && days[draftDate])); }
 
   // init now (DOM is ready: this script runs after the main one)
   buildNav(); buildLive(); buildShare(); buildReports(); buildLab(); buildTracker(); buildSheet(); buildLogs(); buildData(); heroHeads();
