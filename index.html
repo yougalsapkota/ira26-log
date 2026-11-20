@@ -2666,20 +2666,48 @@ window.EXT = (function () {
   }
   function placePicker(inp) { const p = $("fPick"), r = inp.getBoundingClientRect(); p.style.left = Math.max(8, Math.min(r.left, innerWidth - 300)) + "px"; p.style.top = (r.bottom + 4) + "px"; p.style.minWidth = Math.max(r.width, 240) + "px"; }
   function hidePicker() { const p = $("fPick"); if (p) p.classList.add("hidden"); pickerEl.inp = null; }
+  const TYPE_RX = { lvsp: /ptfe|teflon/i, lvsq: /qcm|quartz/i, hvs: /quartz|8.?×.?10|hvs/i, moudi: /moudi|substrate|alumin/i };
+  const instOfInput = (inp) => { if (/^ms-/.test(inp.id)) return "moudi"; const m = inp.id.match(/^x-(\w+)-\w+-filterId$/); return m ? m[1] : ""; };
+  function pickRank(r, k) { if (!k) return 1; if (r.m && r.m.k === k) return 0; const t = fType((r.m || {}).type || ""); if (TYPE_RX[k] && TYPE_RX[k].test(t) && !(k === "hvs" && /qcm|47/i.test(t))) return 1; return 2; }
+  function pickListFor(inp, strict) {
+    const k = instOfInput(inp);
+    return availableFilters().map((r) => ({ r, rank: pickRank(r, k) })).filter((x) => !strict || x.rank < 2)
+      .sort((a, b) => a.rank - b.rank || ({ pre: 0, baked: 1, prepend: 2 }[a.r.stage] - { pre: 0, baked: 1, prepend: 2 }[b.r.stage]) || String(a.r.filterId).localeCompare(String(b.r.filterId), undefined, { numeric: true }))
+      .map(({ r, rank }) => ({ id: String(r.filterId), stage: r.stage, rank, sub: (rank === 2 ? "Other type · " : "") + `${fType((r.m || {}).type) || "type not set"} · ${STAGE_SHORT[r.stage]}${r.pre != null ? " · " + r.pre.toFixed(1) + " µg" : ""}` }));
+  }
   function showPicker(inp) {
     const p = pickerEl(), q = inp.value.trim().toLowerCase();
     const taken = new Set(Array.from(document.querySelectorAll('#upForm input[data-pick]')).filter((x) => x !== inp).map((x) => x.value.trim().toLowerCase()).filter(Boolean));
-    let list = pickItems.filter((it) => !taken.has(it.id.toLowerCase()) && (!q || it.id.toLowerCase().includes(q)));
-    if (inp.dataset.next && !pickItems.length) list = [{ id: inp.dataset.next, sub: "Next number in sequence" }];
+    const items = pickListFor(inp);
+    let list = items.filter((it) => !taken.has(it.id.toLowerCase()) && (!q || it.id.toLowerCase().includes(q)));
+    if (q && items.some((it) => it.id.toLowerCase() === q)) list = list.filter((it) => it.id.toLowerCase() !== q).length ? list : [];
+    if (inp.dataset.next && !items.length) list = [{ id: inp.dataset.next, sub: "Next number in sequence" }];
     if (!list.length) { hidePicker(); return; }
     p.innerHTML = list.slice(0, 40).map((it) => `<button type="button" role="option" data-fid="${esc(it.id)}"><b>${esc(it.id)}</b><span>${esc(it.sub || "")}</span></button>`).join("") + (list.length > 40 ? `<div class="fp-more">${list.length - 40} more, type to narrow</div>` : "");
     pickerEl.inp = inp; placePicker(inp); p.classList.remove("hidden");
+  }
+  function autoAssign() {
+    if (!canWrite || !draft) return;
+    const used = new Set(Array.from(document.querySelectorAll('#upForm input[data-pick]')).map((x) => x.value.trim().toLowerCase()).filter(Boolean));
+    let n = 0, miss = 0;
+    document.querySelectorAll('#upForm input[data-pick]').forEach((inp) => {
+      if (inp.value.trim() || inp.disabled) return;
+      const k = instOfInput(inp); if (!k) return;
+      const st = stateOf(draft, k); if (st !== "none" && st !== "running") return; // only samplers running today
+      const L = pickListFor(inp, true); const c = L.find((it) => it.stage === "pre" && !used.has(it.id.toLowerCase())) || L.find((it) => !used.has(it.id.toLowerCase()));
+      if (!c) { miss++; return; }
+      inp.value = c.id; used.add(c.id.toLowerCase()); inp.dispatchEvent(new Event("input", { bubbles: true })); inp.dispatchEvent(new Event("change", { bubbles: true })); n++;
+    });
+    const msg = $("autoFidMsg"); if (msg) msg.textContent = n ? `Filled ${n} filter ID${n === 1 ? "" : "s"}${miss ? `; ${miss} slot${miss === 1 ? "" : "s"} had no matching pre-weighed filter` : ""}. Check them before saving.` : (miss ? "No matching pre-weighed filters available. Register and pre-weigh them in Filter tracker." : "All filter boxes are already filled.");
   }
   function setupSuggestions() {
     document.querySelectorAll("#upForm datalist.sugg").forEach((d) => d.remove());
     pickerEl();
     const av = availableFilters();
-    pickItems = av.map((r) => ({ id: String(r.filterId), sub: `${fType(r.m.type)} · ${STAGE_SHORT[r.stage]}${r.pre != null ? " · " + r.pre.toFixed(1) + " µg" : ""}` }));
+    pickItems = av.map((r) => ({ id: String(r.filterId) }));
+    if (!$("autoFid")) { const h = document.querySelector("#instForms") && $("instForms").previousElementSibling;
+      if (h) { const row = el(`<div class="row op-only" style="gap:10px;flex-wrap:wrap;align-items:center"><button type="button" class="btn ghost" id="autoFid">Auto-assign pre-weighed filters</button><span class="muted" id="autoFidMsg" style="font-size:12.5px"></span></div>`); h.after(row); $("autoFid").onclick = autoAssign; } }
+    if ($("autoFidMsg")) $("autoFidMsg").textContent = av.length ? `${av.length} pre-weighed / registered filter${av.length === 1 ? "" : "s"} available` : "No unused filters registered yet (Filter tracker → Register filters)";
     document.querySelectorAll('#upForm input[id$="-filterId"], #upForm input[id^="ms-s"]').forEach((inp) => {
       inp.removeAttribute("list"); inp.setAttribute("data-pick", "1"); inp.setAttribute("autocomplete", "off");
       if (!inp.__pick) { inp.__pick = true; inp.addEventListener("focus", () => showPicker(inp)); inp.addEventListener("input", () => showPicker(inp)); inp.addEventListener("blur", () => setTimeout(() => { if (pickerEl.inp === inp) hidePicker(); }, 120)); inp.addEventListener("keydown", (e) => { if (e.key === "Escape") hidePicker(); }); }
