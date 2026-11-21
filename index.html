@@ -1728,6 +1728,16 @@ html.viewonly .tk-sel, html.viewonly td input[type="checkbox"], html.viewonly th
 @media (min-width: 1101px) and (max-height: 790px) { #v-live.lv2 { zoom: .8; height: calc((100vh - 72px) / .8) !important; } }
 @media (min-width: 1101px) and (max-height: 700px) { #v-live.lv2 { zoom: .72; height: calc((100vh - 66px) / .72) !important; } }
 .app .tabs a.hidden, html.viewonly .app .tabs a.op-only, html.viewonly .tabs a[data-v="update"], html.viewonly .tabs a[data-v="logs"], html.viewonly .tabs a[data-v="reset"] { display: none !important; }
+
+/* ===== use the full screen width on large monitors ===== */
+.app main, main { max-width: none !important; width: 100% !important; margin: 0 !important; box-sizing: border-box; }
+@media (min-width: 1600px) {
+  .app main, main { padding-left: 28px !important; padding-right: 28px !important; }
+  .lvx-head { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr) minmax(0, .9fr) !important; }
+  .lvx-head .dt-cells { grid-template-columns: repeat(14, minmax(0, 1fr)) !important; } .lvx-head .dt-cells i { display: none !important; } .lvx-head .dt-cells i:nth-last-child(-n+14) { display: grid !important; }
+  .gauge { max-width: 150px !important; } .lva-v { font-size: 30px !important; }
+  .lv-row3 { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr) !important; }
+}
 </style>
 </head>
 <body>
