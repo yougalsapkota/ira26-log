@@ -1948,6 +1948,60 @@ footer.city-foot { margin-top: 8px !important; } .city-foot .cf-bar { padding: 7
 @media (max-width: 960px) { footer.city-foot .cf-art { height: 84px !important; } }
 #v-live.hidden, #v-live.lv2.hidden, section.hidden { display: none !important; }
 .tabs a[data-v="data"], #v-data { display: none !important; }
+
+/* ===== campaign clock ===== */
+.lv-clock { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 2px 0 4px; padding: 6px 10px; border-radius: 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); }
+.lv-clock .lc-l { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: #C9D3E2 !important; }
+.lv-clock .lc-v { display: inline-flex; gap: 8px; }
+.lv-clock .lc-u { display: inline-flex; align-items: baseline; gap: 2px; }
+.lv-clock .lc-u b { font: 600 19px/1 var(--mono, ui-monospace, monospace); color: #fff !important; font-variant-numeric: tabular-nums; }
+.lv-clock .lc-u i { font-style: normal; font-size: 10px; color: #AEB9CB !important; }
+.lv-clock .lc-s { font-size: 11.5px; color: #C9D3E2 !important; }
+.lv-clock .lc-edit { margin-left: auto; font-size: 11.5px; color: #9CC3EC !important; text-decoration: underline; }
+.lv-clock.pre { border-left: 3px solid #E8C23A; } .lv-clock.run { border-left: 3px solid #4ADE80; } .lv-clock.done { border-left: 3px solid #9AA3AF; }
+@media (min-width: 1101px) { .lvx-head .lvh-meta { display: none !important; } .lv-clock { margin: 4px 0 2px; padding: 4px 10px; } .lv-clock .lc-edit { margin-left: 0; } }
+@media (min-width: 1101px) { footer.city-foot .cf-art { height: 92px !important; } footer.city-foot { margin-top: 6px !important; } }
+
+/* ===== team messages ===== */
+.lv-msgs { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 6px; }
+.tm-list { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 6px; overflow-y: auto; max-height: 150px; align-content: start; }
+.tm-list li { background: #F3F7FC; border-left: 3px solid #1F5FA8; border-radius: 3px; padding: 5px 9px; }
+.tm-list li.tm-empty { background: none; border: 0; padding: 4px 0; color: var(--pro-mut, #5B6475); font-size: 12.5px; }
+.tm-h { display: flex; gap: 8px; align-items: baseline; font-size: 11.5px; color: #5B6475; } .tm-h b { color: #1A2233; font-size: 12.5px; }
+.tm-x { margin-left: auto; border: 0; background: none; color: #8A93A3; cursor: pointer; font-size: 15px; line-height: 1; padding: 0 2px; } .tm-x:hover { color: #8C1D2B; }
+.tm-list p { margin: 2px 0 0; font-size: 13px; color: #1A2233; white-space: pre-wrap; word-break: break-word; }
+.tm-form { display: flex; gap: 6px; } .tm-form input { flex: 1; min-width: 0; padding: 5px 8px !important; font-size: 13px !important; } .tm-form .btn { padding: 5px 12px !important; }
+html.viewonly .tm-form { display: none !important; }
+@media (min-width: 1400px) {
+  #v-live.lv2 { grid-template-areas: "nag nag nag" "head head head" "air air photo" "samp samp photo" "inst next msgs" !important; }
+  #v-live .lv-msgs { grid-area: msgs; }
+  .lv-next .lv-act { grid-template-columns: 1fr !important; }
+  .tm-list { max-height: 118px; }
+}
+@media (min-width: 1101px) and (max-width: 1399px) { .lv-row3 { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+
+/* ===== icons ===== */
+svg.ic { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vertical-align: -3px; margin-right: 6px; flex: none; color: #1F5FA8; }
+svg.ic.sm { width: 13px; height: 13px; margin-right: 4px; vertical-align: -2px; color: #6B7A92; }
+#v-live h3 { display: inline-flex; align-items: center; }
+#v-live h3 svg.ic { color: #0E2043; width: 16px; height: 16px; }
+.lva-h { display: flex; align-items: center; gap: 0; }
+.lva-bc .lva-l { display: inline-flex; align-items: center; }
+.lv-clock .lc-l { display: inline-flex; align-items: center; } .lv-clock svg.ic { color: #C9D3E2 !important; }
+.lva-wgrid span { display: inline-flex; align-items: baseline; gap: 2px; } .lva-wgrid svg.ic { align-self: center; }
+.lva-note { font-size: 11px !important; color: #8A93A3 !important; grid-column: 1 / -1; }
+@media (min-width: 1101px) { .lva-panel { grid-template-columns: 1fr 1fr !important; } }
+@media (min-width: 1101px) {
+  .lva-main { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr) !important; }
+  .lva-panel { grid-template-columns: 1fr 1fr !important; gap: 8px 18px !important; }
+  .lva-panel .lva-blk:nth-child(1) { grid-column: auto !important; }
+  .lva-panel .lva-bc .lva-l { width: 76px !important; }
+}
+@media (min-width: 1400px) {
+  #v-live .lv-next .lv-act, #v-live .tm-list { max-height: 150px !important; overflow-y: auto !important; }
+  #v-live .lv-inst, #v-live .lv-next, #v-live .lv-msgs { align-self: start; }
+}
+@media (min-width: 1400px) { #v-live .lv-next .lv-act, #v-live .tm-list { max-height: 128px !important; } }
 </style>
 </head>
 <body>
@@ -3323,7 +3377,7 @@ window.EXT = (function () {
   const FLOW_UNIT = { lvsp: "L/min", lvsq: "L/min", moudi: "L/min", hvs: "m³/min" };
   const QC_DEFAULT = { flow: { lvsp: 16.67, lvsq: 16.67, moudi: 30, hvs: 1.13 }, volTol: 5, wTol: 5, frzMax: -18 };
   let qc = JSON.parse(JSON.stringify(QC_DEFAULT));
-  let aeLog = [], sitePhoto = null, wx = null, wxAt = 0;
+  let aeLog = [], teamMsgs = [], sitePhoto = null, wx = null, wxAt = 0;
   let cpLog = [];   // CPCB station readings [{id, at, station, aqi, pm25, pm10, note}]
   let condLog = {}; // day conditions by date {list, vis, note, at}
   let maintLog = []; // instrument maintenance [{id, at, type, note}]
@@ -4504,7 +4558,7 @@ window.EXT = (function () {
     Object.entries(days).forEach(([d, x]) => { paths.push("days/" + d); Object.values((x && x.photos) || {}).flat().forEach((p) => { if (p && p.pid) paths.push("photos/" + p.pid); }); });
     Object.keys(filtersMeta).forEach((k) => paths.push("filters/" + k));
     stock.forEach((s) => paths.push("stock/" + s.id)); aeLog.forEach((x) => paths.push("aeLog/" + x.id)); cpLog.forEach((x) => paths.push("cpcb/" + x.id));
-    Object.keys(condLog).forEach((k) => paths.push("cond/" + k)); maintLog.forEach((x) => paths.push("maint/" + x.id));
+    Object.keys(condLog).forEach((k) => paths.push("cond/" + k)); maintLog.forEach((x) => paths.push("maint/" + x.id)); teamMsgs.forEach((x) => paths.push("msgs/" + x.id));
     Object.keys(roster).forEach((k) => paths.push("roster/" + k)); Object.keys(seriesIdx).forEach((k) => paths.push("series/" + k));
     if (sitePhoto) { (sitePhoto.dates || [sitePhoto.date]).forEach((x) => x && paths.push("sitephoto/" + x)); paths.push("sitephoto/latest"); }
     if ($("rsCfg").checked) paths.push("meta/campaign", "config/qc");
@@ -5309,6 +5363,7 @@ window.EXT = (function () {
           <div class="lvh-top"><h2 id="lvTitle" class="live-h"><span class="live-dot" aria-hidden="true"></span>Live now</h2>
             <div class="row lvx-btns"><button class="btn op-only" type="button" id="lvLogBtn">Log readings</button><a class="btn op-only" href="#update">Daily update</a><button class="btn op-only hidden-hard" type="button" id="sumPdf">Campaign PDF</button></div></div>
           <div class="lvh-meta" id="lvMeta"></div>
+          <div class="lv-clock" id="lvClock" aria-live="off"></div>
           <div class="cprog" id="lvProg"></div>
         </div>
         <div class="lvx-h2"><div class="lv-days" id="lvDays"></div></div>
@@ -5324,6 +5379,9 @@ window.EXT = (function () {
           <div class="muted" style="font-size:12px" id="spMeta"></div><div class="muted" id="spMsg" style="font-size:12px"></div></div>
         <div class="card lv-inst"><div class="row spread"><h3 style="margin:0">Online instruments</h3><span class="muted" style="font-size:12px" id="lvAsOf"></span></div><div class="lv-online" id="lvOnline"></div><div class="lv-mt" id="lvMt"></div></div>
         <div class="card lv-next"><h3>Next actions</h3><ul class="lv-act" id="lvAct"></ul></div>
+        <div class="card lv-msgs" id="lvMsgs"><div class="row spread"><h3 style="margin:0">Team messages</h3><span class="muted" style="font-size:11.5px" id="tmCount"></span></div>
+          <ul class="tm-list" id="tmList"></ul>
+          <form class="tm-form op-only" id="tmForm" autocomplete="off"><input type="text" id="tmText" maxlength="240" placeholder="Message to the team…" aria-label="Message to the team"><button class="btn" type="submit">Send</button></form></div>
       </div>
       <dialog class="sp-view" id="spView"><img id="spBig" alt=""><div class="sp-cap" id="spBigCap"></div><button type="button" class="btn" id="spClose">Close</button></dialog>
       <div class="hidden" id="lvToday"></div>
@@ -5378,6 +5436,14 @@ window.EXT = (function () {
     $("spFile").onchange = async (ev) => { const f = ev.target.files && ev.target.files[0]; ev.target.value = ""; if (f) await uploadSitePhoto(f); };
     $("spClose").onclick = () => { try { $("spView").close(); } catch { $("spView").removeAttribute("open"); } };
     $("spView").addEventListener("click", (ev) => { if (ev.target === $("spView")) $("spClose").click(); });
+    $("tmForm").onsubmit = async (ev) => { ev.preventDefault(); if (!canWrite) return; const txt = $("tmText").value.trim().slice(0, 240); if (!txt) return;
+      const at = isoNow(), d = todayStr(), by = (days[d] && days[d].operators) || (roster && roster[d] && roster[d].names) || (() => { try { return localStorage.getItem("ira26-ops") || ""; } catch { return ""; } })() || "Operator";
+      const id = at.replace(/[^0-9]/g, "") + "_" + Math.random().toString(36).slice(2, 6), rec = { at, by: String(by).split(/\s*,\s*/)[0], text: txt };
+      const btn = $("tmForm").querySelector("button"); btn.disabled = true;
+      try { await db.doc("msgs/" + id).set(rec); teamMsgs = [{ id, ...rec }, ...teamMsgs.filter((x) => x.id !== id)]; $("tmText").value = ""; renderMsgs(); } catch { flash(btn, "Couldn't send"); }
+      btn.disabled = false; };
+    $("tmList").addEventListener("click", async (ev) => { const b = ev.target.closest("[data-tmdel]"); if (!b || !canWrite) return;
+      if (!(await ask("Delete this message?", "Delete"))) return; try { await db.doc("msgs/" + b.dataset.tmdel).delete(); teamMsgs = teamMsgs.filter((x) => x.id !== b.dataset.tmdel); renderMsgs(); } catch {} });
     $("lvLogBtn").onclick = () => { try { $("lvLog").showModal(); } catch { $("lvLog").setAttribute("open", ""); } };
     $("lvLogX").onclick = () => { try { $("lvLog").close(); } catch { $("lvLog").removeAttribute("open"); } };
     $("lvLog").addEventListener("click", (ev) => { if (ev.target === $("lvLog")) $("lvLogX").click(); });
@@ -5489,6 +5555,30 @@ window.EXT = (function () {
   const AQI_B = [[0, 50, "#2E8B57", "Good"], [50, 100, "#9BBF3B", "Satisfactory"], [100, 200, "#E8C23A", "Moderate"], [200, 300, "#E8862E", "Poor"], [300, 400, "#C8323C", "Very poor"], [400, 500, "#7A1E3A", "Severe"]];
   const PM_B = [[0, 30, "#2E8B57", "Good"], [30, 60, "#9BBF3B", "Satisfactory"], [60, 90, "#E8C23A", "Moderate"], [90, 120, "#E8862E", "Poor"], [120, 250, "#C8323C", "Very poor"], [250, 300, "#7A1E3A", "Severe"]];
   const bandOf = (B, v) => v == null ? null : (B.find(([lo, hi]) => v <= hi) || B[B.length - 1]);
+
+  const IC = (p, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${p}</svg>`;
+  const ICONS = {
+    air: '<path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h7"/>',
+    filter: '<path d="M4 5h16l-6 7v6l-4 2v-8z"/>',
+    camera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+    inst: '<rect x="4" y="5" width="16" height="11" rx="1.5"/><path d="M8 20h8M12 16v4M7 12l2.5-3 2.5 2 3-4 2 2"/>',
+    check: '<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>',
+    chat: '<path d="M4 5h16v10H9l-5 4z"/>',
+    therm: '<path d="M10 4a2 2 0 0 1 4 0v10a4 4 0 1 1-4 0z"/><path d="M12 9v7"/>',
+    drop: '<path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/>',
+    wind: '<path d="M3 9h12a3 3 0 1 0-3-3"/><path d="M3 15h15a3 3 0 1 1-3 3"/>',
+    layers: '<path d="M12 4l9 5-9 5-9-5z"/><path d="M3 14l9 5 9-5"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/>',
+    moon: '<path d="M20 14A8 8 0 1 1 10 4a6 6 0 0 0 10 10z"/>',
+    haze: '<path d="M4 9h16M2 13h20M5 17h14"/><circle cx="17" cy="5" r="2"/>',
+    soot: '<circle cx="8" cy="12" r="3"/><circle cx="13" cy="10" r="2.5"/><circle cx="16" cy="14" r="2"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    live: '<circle cx="12" cy="12" r="2.5"/><path d="M7.5 7.5a6 6 0 0 0 0 9M16.5 7.5a6 6 0 0 1 0 9"/>',
+  };
+  function decorateHeadings() {
+    const map = { "Air quality · black carbon · weather": "air", "Filter samplers": "filter", "Campaign site": "camera", "Online instruments": "inst", "Next actions": "check", "Team messages": "chat" };
+    document.querySelectorAll("#v-live h3").forEach((h) => { if (h.querySelector(".ic")) return; const k = map[h.textContent.trim()]; if (k) h.insertAdjacentHTML("afterbegin", IC(ICONS[k])); });
+  }
   function renderLvMt() { if (!$("lvMt")) return; const last = (k) => { const L = maintLog.filter((x) => x.type === k); return L[L.length - 1]; };
     $("lvMt").innerHTML = Object.entries(MAINT).map(([k, v]) => { const l = last(k); return `<span><b>${esc(k === "aeTape" ? "AE33 tape changed" : "Butanol filled")}</b> ${l ? esc(aeWhen(l.at)) : "not logged"}</span>`; }).join(""); }
   function renderLvAir() {
@@ -5501,13 +5591,16 @@ window.EXT = (function () {
     const bcMeter = `<div class="lva-g">${gaugeSvg(bcNow ? bcNow.bc / 1000 : null, 30, BC_B)}<div class="lva-v" style="color:${bcB ? bcB[2] : "#9AA0AC"}">${bcNow ? (bcNow.bc / 1000).toFixed(1) : "—"}</div><div class="lva-l">BC · AE33 <span>µg/m³</span></div><div class="lva-b" style="${bcB ? `background:${bcB[2]}1F;color:${bcB[2] === "#E8C23A" ? "#5A4A0A" : bcB[2]}` : ""}">${bcNow ? (bcNow === a.evening ? "Evening" : "Morning") + " " + esc(String(bcNow.at).slice(11, 16)) : "not logged"}</div></div>`;
     const w = wxNow();
     const cdHtml = c && ((c.list || []).length || c.temp != null) ? `${(c.list || []).map((x) => `<span class="cd-pill">${esc(x)}</span>`).join("")}${c.temp != null ? `<span class="lva-t">${esc(c.temp)} °C</span>` : ""}` : `<span class="muted">not logged</span>`;
-    $("lvAir").innerHTML = `<div class="row spread lva-head"><h3 style="margin:0">Air quality · black carbon · weather</h3><span class="muted" style="font-size:12px">${last ? `CPCB ${esc(last.station || "")} · ${esc(fmtDate(last.at.slice(0, 10)).replace(/, \d{4}$/, ""))}${t ? "" : " (latest)"}` : "Today's CPCB value not entered"}</span></div>
+    const useM = !t && aqm, aqiV = t ? t.aqi : useM ? aqm.aqi : last ? last.aqi : null, pmV = t ? t.pm25 : useM ? aqm.pm25 : last ? last.pm25 : null;
+    const src = t ? `CPCB ${esc(t.station || "")} · today` : useM ? "Live model (CAMS) · CPCB not entered yet" : last ? `CPCB ${esc(last.station || "")} · ${esc(fmtDate(last.at.slice(0, 10)).replace(/, \d{4}$/, ""))} (latest)` : "Today's CPCB value not entered";
+    $("lvAir").innerHTML = `<div class="row spread lva-head"><h3 style="margin:0">Air quality · black carbon · weather</h3><span class="muted" style="font-size:12px">${src}</span></div>
       <div class="lva-main">
-        <div class="lva-grid3">${meter("AQI", last ? last.aqi : null, AQI_B, 500, "")}${meter("PM<sub>2.5</sub> · CPCB", last ? last.pm25 : null, PM_B, 300, "µg/m³")}${bcMeter}</div>
+        <div class="lva-grid3">${meter(useM ? "AQI · model" : "AQI", aqiV, AQI_B, 500, "")}${meter(useM ? "PM<sub>2.5</sub> · model" : "PM<sub>2.5</sub> · CPCB", pmV, PM_B, 300, "µg/m³")}${bcMeter}</div>
         <div class="lva-panel">
-          <div class="lva-blk"><div class="lva-h">AE33 BC (880 nm)</div>${bc("Morning", a.morning)}${bc("Evening", a.evening)}</div>
-          <div class="lva-blk"><div class="lva-h">Weather now <span class="lva-src">model</span></div>${w ? `<div class="lva-wgrid"><span><b>${w.t.toFixed(1)}</b> °C</span><span>RH <b>${Math.round(w.rh)}</b>%</span><span><b>${w.ws.toFixed(1)}</b> m/s <i class="wd" style="transform:rotate(${(w.wd + 180) % 360}deg)" aria-hidden="true">↑</i> ${dirName(w.wd)}</span>${w.blh != null ? `<span>BLH <b>${Math.round(w.blh).toLocaleString("en-IN")}</b> m</span>` : ""}</div>` : `<span class="muted">not available</span>`}</div>
-          <div class="lva-blk"><div class="lva-h">Conditions</div><div class="lva-cd">${cdHtml}</div></div>
+          <div class="lva-blk"><div class="lva-h">${IC(ICONS.soot)}AE33 BC (880 nm)</div>${bc(IC(ICONS.sun, "sm") + "Morning", a.morning)}${bc(IC(ICONS.moon, "sm") + "Evening", a.evening)}</div>
+          <div class="lva-blk"><div class="lva-h">${IC(ICONS.live)}Live PM <span class="lva-src">CAMS model</span></div>${aqm ? `<div class="lva-wgrid"><span>PM<sub>2.5</sub> <b>${Math.round(aqm.pm25)}</b> µg/m³</span><span>PM<sub>10</sub> <b>${Math.round(aqm.pm10)}</b></span><span>AQI* <b>${aqm.aqi ?? "–"}</b></span><span class="lva-note">${esc(String(aqm.at || "").slice(11, 16))} · 24 h avg</span></div>` : `<span class="muted">not available</span>`}</div>
+          <div class="lva-blk"><div class="lva-h">${IC(ICONS.sun)}Weather now <span class="lva-src">model</span></div>${w ? `<div class="lva-wgrid"><span>${IC(ICONS.therm, "sm")}<b>${w.t.toFixed(1)}</b> °C</span><span>${IC(ICONS.drop, "sm")}<b>${Math.round(w.rh)}</b>% RH</span><span>${IC(ICONS.wind, "sm")}<b>${w.ws.toFixed(1)}</b> m/s <i class="wd" style="transform:rotate(${(w.wd + 180) % 360}deg)" aria-hidden="true">↑</i> ${dirName(w.wd)}</span>${w.blh != null ? `<span>${IC(ICONS.layers, "sm")}BLH <b>${Math.round(w.blh).toLocaleString("en-IN")}</b> m</span>` : ""}</div>` : `<span class="muted">not available</span>`}</div>
+          <div class="lva-blk"><div class="lva-h">${IC(ICONS.haze)}Conditions</div><div class="lva-cd">${cdHtml}</div></div>
         </div>
       </div>`;
   }
@@ -5566,7 +5659,7 @@ window.EXT = (function () {
     $("lvOnline").innerHTML = conts.map((i) => { const s = stateOf(lastDay, i.k), note = ((lastDay || {}).status || {})[i.k]?.note || "";
       return `<div class="on s-${s}" title="${esc(i.short)}: ${esc(STATE_LBL[s])}${note ? " · " + esc(note) : ""}"><i></i><div><b>${esc(i.short)}</b><span>${esc(STATE_LBL[s])}${note ? " · " + esc(note) : ""}</span></div></div>`; }).join("");
     renderLvAir();
-    renderLvMt(); renderSitePhoto();
+    renderLvMt(); renderSitePhoto(); tickClock(); renderMsgs(); decorateHeadings();
     { let last = null; try { last = localStorage.getItem("ira26-lastBackup"); } catch {} const age = last ? (Date.now() - new Date(last)) / 864e5 : Infinity;
       const show = canWrite && Object.keys(days).length > 0 && age > 3; $("bkNag").classList.toggle("hidden", !show);
       if (show) $("bkNagTxt").textContent = last ? `No backup for ${Math.floor(age)} days. Keep a copy in case anything goes wrong.` : "No backup downloaded from this device yet. Keep a copy in case anything goes wrong."; }
@@ -5685,7 +5778,8 @@ window.EXT = (function () {
     sub("maint")((s) => { maintLog = s.docs.map((d) => ({ id: d.id, ...d.data() })).filter((x) => x.at && x.type).sort((a, b) => a.at.localeCompare(b.at)); renderMaint(); });
     sub("cond")((s) => { const m = {}; s.docs.forEach((d) => { const v = d.data(); if (v) m[d.id] = v; }); condLog = m; renderCond(); renderLive(); });
     try { db.doc("sitephoto/latest").onSnapshot((s) => { sitePhoto = s && s.exists ? s.data() : null; renderSitePhoto(); }, () => {}); } catch {}
-    loadWx(); setInterval(() => loadWx(), 30 * 60e3);
+    loadWx(); setInterval(() => loadWx(), 30 * 60e3); loadAQ(); setInterval(() => loadAQ(), 30 * 60e3);
+    sub("msgs")((s) => { teamMsgs = s.docs.map((d) => ({ id: d.id, ...d.data() })).filter((x) => x.at && x.text).sort((a, b) => b.at.localeCompare(a.at)); renderMsgs(); });
     sub("aeLog")((s) => { aeLog = s.docs.map((d) => ({ id: d.id, ...d.data() })).filter((x) => x.at && num(x.bc) != null).sort((a, b) => a.at.localeCompare(b.at)); renderAe(); });
     sub("stock")((s) => { stock = s.docs.map((d) => ({ id: d.id, ...d.data() })).filter((x) => x.name); renderLogs(); renderAlerts(); });
     sub("roster")((s) => { const m = {}; s.docs.forEach((d) => { m[d.id] = d.data(); }); roster = m; renderLogs(); decorateCalendar(); });
@@ -5723,6 +5817,14 @@ window.EXT = (function () {
       sitePhoto = { ...rec, dates }; msg.textContent = "Photo updated."; setTimeout(() => { if (msg.textContent === "Photo updated.") msg.textContent = ""; }, 4000); renderSitePhoto();
     } catch (err) { msg.textContent = "Couldn't upload the photo. Try a smaller picture or check the connection."; }
   }
+
+  function renderMsgs() {
+    const ul = $("tmList"); if (!ul) return;
+    const L = teamMsgs.slice(0, 30);
+    $("tmCount").textContent = teamMsgs.length ? `${teamMsgs.length} message${teamMsgs.length === 1 ? "" : "s"}` : "";
+    const when = (at) => { const d = new Date(at), t = todayStr(), ds = at.slice(0, 10); return (ds === t ? "Today" : fmtDate(ds).replace(/, \d{4}$/, "")) + ", " + d.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: false }); };
+    ul.innerHTML = L.length ? L.map((m) => `<li><div class="tm-h"><b>${esc(m.by || "Operator")}</b><span>${esc(when(m.at))}</span>${canWrite ? `<button type="button" class="tm-x" data-tmdel="${esc(m.id)}" aria-label="Delete message">×</button>` : ""}</div><p>${esc(m.text)}</p></li>`).join("") : `<li class="tm-empty">No messages yet.${canWrite ? " Post a note for the team below." : ""}</li>`;
+  }
   function renderSitePhoto() {
     const fr = $("spFrame"); if (!fr) return; const p = sitePhoto;
     { const h = document.querySelector(".lvx-head"); if (h) { if (p && p.data) { h.style.setProperty("background-image", `url("${p.data}")`, "important"); h.classList.add("has-photo"); let c = h.querySelector(".lvx-photo-cap"); if (!c) { c = el('<span class="lvx-photo-cap"></span>'); h.appendChild(c); } c.textContent = `Site · ${fmtDate(p.date).replace(/, \d{4}$/, "")}`; } else { h.style.removeProperty("background-image"); h.classList.remove("has-photo"); } } }
@@ -5731,6 +5833,25 @@ window.EXT = (function () {
     fr.innerHTML = `<button type="button" class="sp-img" id="spOpen" aria-label="Open site photo"><img src="${p.data}" alt="Campaign site on ${esc(fmtDate(p.date))}"></button>${p.caption ? `<div class="sp-cap">${esc(p.caption)}</div>` : ""}`;
     $("spMeta").textContent = `${old ? "Latest · " : "Today · "}${fmtDate(p.date).replace(/, \d{4}$/, "")}, ${new Date(p.at).toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: false })}${p.by ? " · " + p.by : ""}`;
     $("spOpen").onclick = () => { $("spBig").src = p.data; $("spBigCap").textContent = [fmtDate(p.date), p.caption, p.by].filter(Boolean).join(" · "); try { $("spView").showModal(); } catch { $("spView").setAttribute("open", ""); } };
+  }
+
+
+  /* ================== LIVE PM (CAMS model via Open-Meteo) ================== */
+  let aqm = null, aqmAt = 0;
+  const NAQI = { pm25: [[0, 30, 0, 50], [31, 60, 51, 100], [61, 90, 101, 200], [91, 120, 201, 300], [121, 250, 301, 400], [251, 500, 401, 500]],
+                 pm10: [[0, 50, 0, 50], [51, 100, 51, 100], [101, 250, 101, 200], [251, 350, 201, 300], [351, 430, 301, 400], [431, 800, 401, 500]] };
+  function subIdx(c, B) { if (c == null || isNaN(c)) return null; c = Math.round(c); for (const [lo, hi, il, ih] of B) if (c <= hi) return Math.round(il + (ih - il) * (c - lo) / Math.max(1, hi - lo)); return 500; }
+  async function loadAQ(force) {
+    if (!force && aqm && Date.now() - aqmAt < 30 * 60e3) return aqm;
+    const ll = [num(meta.lat) ?? SITE_LL[0], num(meta.lon) ?? SITE_LL[1]];
+    const u = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${ll[0]}&longitude=${ll[1]}&current=pm2_5,pm10&hourly=pm2_5,pm10&past_days=1&forecast_days=1&timezone=Asia%2FKolkata`;
+    try { const r = await fetch(u); if (!r.ok) throw 0; const j = await r.json(); if (!j.current) throw 0;
+      const H = j.hourly || {}, nowK = (j.current.time || "").slice(0, 13), idx = (H.time || []).findIndex((x) => x.slice(0, 13) === nowK);
+      const avg = (arr) => { if (idx < 0 || !arr) return null; const v = arr.slice(Math.max(0, idx - 23), idx + 1).filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+      const p25 = avg(H.pm2_5) ?? j.current.pm2_5, p10 = avg(H.pm10) ?? j.current.pm10;
+      const ai = [subIdx(p25, NAQI.pm25), subIdx(p10, NAQI.pm10)].filter((x) => x != null);
+      aqm = { pm25: j.current.pm2_5, pm10: j.current.pm10, pm25_24: p25, aqi: ai.length ? Math.max(...ai) : null, at: j.current.time }; aqmAt = Date.now(); renderLvAir(); return aqm;
+    } catch { return aqm; }
   }
 
   /* ================== WEATHER (Open-Meteo model, site coordinates) ================== */
@@ -5759,6 +5880,26 @@ window.EXT = (function () {
   }
   function wxDayText(d) { const w = wxDay(d); if (!w || w.tmin == null) return "";
     return `T ${w.tmin.toFixed(0)}–${w.tmax.toFixed(0)} °C;  RH ${Math.round(w.rhmin)}–${Math.round(w.rhmax)} %;  wind ${w.ws != null ? w.ws.toFixed(1) : "–"} m/s, mainly ${dirName(w.wd)}${w.bmin != null ? `;  BLH ${Math.round(w.bmin).toLocaleString("en-IN")}–${Math.round(w.bmax).toLocaleString("en-IN")} m` : ""}`; }
+
+
+  /* ================== CAMPAIGN CLOCK (countdown / elapsed) ================== */
+  function campBounds() {
+    const s = meta.start || DEFAULT_START, e = meta.end || DEFAULT_END;
+    return { s, e, t0: new Date(s + "T00:00:00+05:30"), t1: new Date(e + "T23:59:59+05:30") };
+  }
+  function tickClock() {
+    const box = $("lvClock"); if (!box) return;
+    const { s, e, t0, t1 } = campBounds(), now = new Date(), z = (n) => String(n).padStart(2, "0");
+    const parts = (ms) => { ms = Math.max(0, ms); const d = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5) % 24, m = Math.floor(ms / 6e4) % 60, sec = Math.floor(ms / 1e3) % 60; return `<span class="lc-u"><b>${d}</b><i>days</i></span><span class="lc-u"><b>${z(h)}</b><i>hrs</i></span><span class="lc-u"><b>${z(m)}</b><i>min</i></span><span class="lc-u"><b>${z(sec)}</b><i>sec</i></span>`; };
+    const edit = canWrite ? `<a href="#logs" class="lc-edit" id="lcEdit">Edit dates</a>` : "";
+    let lbl, body, sub;
+    if (now < t0) { lbl = "Campaign starts in"; body = parts(t0 - now); sub = `Starts ${fmtDate(s)}`; box.className = "lv-clock pre"; }
+    else if (now <= t1) { lbl = "Campaign running for"; body = parts(now - t0); sub = `Ends ${fmtDate(e)} · ${Math.ceil((t1 - now) / 864e5)} days left`; box.className = "lv-clock run"; }
+    else { lbl = "Campaign completed"; body = parts(t1 - t0); sub = `${fmtDate(s)} – ${fmtDate(e)}`; box.className = "lv-clock done"; }
+    box.innerHTML = `<span class="lc-l">${IC(ICONS.clock, "sm")}${lbl}</span><span class="lc-v">${body}</span><span class="lc-s">${esc(sub)}</span>${edit}`;
+    const ed = $("lcEdit"); if (ed) ed.onclick = () => setTimeout(() => { const sb = $("settingsBox"); if (sb) { sb.open = true; sb.scrollIntoView({ block: "center" }); const i = $("s-start"); if (i) i.focus(); } }, 120);
+  }
+  setInterval(tickClock, 1000);
 
   /* ================== HOME-SCREEN ICON ================== */
   (function appIcon() {
