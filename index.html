@@ -3052,12 +3052,13 @@ route();
 (async () => {
   const conn = $("conn");
   const showConn = (t) => { conn.textContent = t; conn.classList.toggle("hidden", !t); };
-  const timer = setTimeout(() => showConn("The campaign log can't be reached yet. It will appear when the connection returns."), 10000);
+  const timer = setTimeout(() => { if (!loaded) showConn(navigator.onLine === false ? "No internet connection. Entries you save are kept on this device and upload when the connection returns." : "Still connecting to the campaign database… If this stays, check the internet connection and reload."); }, 15000);
   user = null;
   try {
     if (!window.firebase || !window.FIREBASE_CONFIG || /PASTE_/.test(window.FIREBASE_CONFIG.apiKey)) throw new Error("config");
     firebase.initializeApp(window.FIREBASE_CONFIG);
     db = firebase.firestore();
+    try { db.settings({ experimentalAutoDetectLongPolling: true, merge: true }); } catch (e) {}
     try { await db.enablePersistence({ synchronizeTabs: true }); } catch (e) {}
     try {
       const DR = firebase.firestore.DocumentReference.prototype;
@@ -3083,7 +3084,7 @@ route();
   recomputeWrite();
 
   if (window.EXT) EXT.boot();
-  db.collection("days").onSnapshot((snap) => {
+  db.collection("days").onSnapshot({ includeMetadataChanges: true }, (snap) => {
     const next = {}; snap.docs.forEach((d) => { const v = d.data(); if (v) next[d.id] = v; });
     days = next;
     if (!snap.metadata.fromCache) { loaded = true; clearTimeout(timer); showConn(""); }
